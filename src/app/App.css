@@ -1,0 +1,56 @@
+.container {
+    display: grid;
+    grid-template-columns: 7fr 3fr;
+}
+
+.video-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    align-content: center;
+    margin-top: 10rem;
+    margin-left: 10rem;
+}
+
+.user-video {
+    transform: rotateY(180deg);
+    -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+    -moz-transform:rotateY(180deg); /* Firefox */
+    margin-right: 20px;
+
+}
+
+.title {
+    text-align: center;
+    color: white;
+}
+
+.caller {
+    text-align: center;
+    color: white;
+}
+
+body {
+    background: black;
+}
+
+.dark-mode-toggle {
+    float: right;
+    color: white;
+}
+
+@media all and (max-width: 850px) {
+    .container {
+        display: unset;
+        grid-template-columns: unset;
+        margin: 0 auto;
+    }
+
+    .video-container {
+        display: unset;
+        justify-content: center;
+        align-content: center;
+        text-align: center;
+        margin: 0 auto;
+    }
+}

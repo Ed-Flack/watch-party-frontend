@@ -1,0 +1,87 @@
+.chat-window {
+    /*margin-right: 2.5rem;*/
+    /*margin-left: 2.5rem;*/
+    border-radius: 5px;
+    background: white;
+    display: grid;
+    width: 400px;
+    margin: 0 auto;
+}
+
+.chat-title {
+    background: black;
+    color: white;
+    display: grid;
+    padding-left: 5px;
+}
+
+.chat-content {
+    padding-top: 2px;
+    height: 400px;
+    overflow: auto;
+    font-size: 15px;
+}
+
+.chat-message {
+    width: 330px;
+    height: 20px;
+    margin-bottom: 3px;
+    border-radius: 5px;
+    margin-left: 3px;
+    outline: solid black;
+}
+
+.send {
+    background: black;
+    color: white;
+    border-radius: 5px;
+    height: 30px;
+    margin-left: 10px;
+}
+
+
+#partner .message-content {
+    background: black;
+    color: white;
+    display: inline-block;
+    min-width: min-content;
+    max-width: 200px;
+    border-radius: 5px;
+    padding: 0 10px 0 10px;
+    overflow-wrap: anywhere;
+}
+
+#you .message-content {
+    outline: solid black;
+    color: black;
+    display: inline-block;
+    min-width: min-content;
+    max-width: 200px;
+    padding: 0 10px 0 10px;
+    border-radius: 5px;
+    margin-left: 5px;
+    margin-top: 5px;
+    overflow-wrap: anywhere;
+}
+
+.message-metadata {
+    font-size: 12px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+@media all and (max-width: 850px) {
+    .chat-content {
+        padding-top: 2px;
+        height: 275px;
+        overflow: auto;
+    }
+
+    .chat-window {
+        border-radius: 5px;
+        background: white;
+        outline: solid white;
+        display: grid;
+        margin: 0 auto 20px;
+    }
+}
