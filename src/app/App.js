@@ -8,7 +8,7 @@ import { Switch } from "@material-ui/core";
 import './App.css';
 import ReactPlayer from 'react-player';
 
-const socket = io.connect('http://localhost:5000');
+const socket = io.connect('https://63ee76bed7e05e494ce604cd--melodic-snickerdoodle-9548dc.netlify.app/');
 
 function App() {
 
