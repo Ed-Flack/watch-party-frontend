@@ -8,7 +8,6 @@ import './App.css';
 import ReactPlayer from 'react-player';
 import Upload from './upload/Upload';
 import { Button } from '@material-ui/core';
-
 const socket = io.connect('https://watch-party-backend.herokuapp.com');
 
 function App() {
@@ -35,12 +34,16 @@ function App() {
     const [isUpload, setIsUpload] = useState(false);
     const [videoName, setVideoName] = useState('');
     const [videoNameTextBox, setVideoNameTextBox] = useState('');
+    const [videoData, setVideoData] = useState();
 
     const playerRef = useRef()
 
     const connectionRef = useRef();
 
     useEffect(() => {
+        if (!videoData) {
+            fetch('https://storage.googleapis.com/storage/v1/b/eddies-super-watch-party-bucket/o').then(response => response.json()).then(json => {setVideoData(json); console.log(json)});
+        }
         localStorage.getItem('name') ? setName(localStorage.getItem('name')) : setName('');
         if (localStorage.getItem('darkMode') === 'false') {
             setDarkMode(false);
@@ -280,10 +283,12 @@ function App() {
                         </div>) :
                         (
                             <center>
-                                <h>Video Name:</h>
-                                <br />
-                                <br />
-                                <Input style={{ outline: "solid black" }} onChange={e => setVideoNameTextBox(e.target.value)}/> <Button style={{ background: "black", color: "white" }} onClick={() => setVideoName(videoNameTextBox)} >Submit</Button>
+                                {videoData ? videoData.items.map((item, i) => (
+                                    <div>
+                                        <Button style={{background: 'black', color: 'white'}} onClick={() => setVideoName(item.selfLink.split('/').at(-1))}>{item.selfLink.split('/').at(-1)}</Button>
+                                        {i !== videoData.items.length ? <div><br /></div> : null}
+                                    </div>
+                                )) : null}
                             </center>
                         )
                     }
