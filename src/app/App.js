@@ -9,7 +9,7 @@ import ReactPlayer from 'react-player';
 import Upload from './upload/Upload';
 import { Button } from '@material-ui/core';
 
-const socket = io.connect('https://lesson-bar.codedamn.app:5000');
+const socket = io.connect('https://watch-party-backend.herokuapp.com');
 
 function App() {
 
