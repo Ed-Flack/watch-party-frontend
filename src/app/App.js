@@ -261,7 +261,7 @@ function App() {
                         <div className="video-container">
                             <ReactPlayer
                                 ref={playerRef}
-                                url={'https://storage.cloud.google.com/eddies-super-watch-party-bucket/' + videoName}
+                                url={'https://storage.googleapis.com/eddies-super-watch-party-bucket/' + videoName}
                                 height="100%"
                                 width="100%"
                                 controls={true}
