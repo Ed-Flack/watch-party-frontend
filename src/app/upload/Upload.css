@@ -1,0 +1,19 @@
+.file-picker {
+    text-align: center;
+}
+
+.file-picker-button-dark {
+    text-align: center;
+    background: black;
+    color: white;
+    border-radius: 5px;
+    height: 30px;
+}
+
+.file-picker-button-light {
+    text-align: center;
+    background: white;
+    color: black;
+    border-radius: 5px;
+    height: 30px;
+}

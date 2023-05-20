@@ -39,6 +39,24 @@ body {
     color: white;
 }
 
+.upload-button-dark {
+    float: left;
+    background: black;
+    color: white;
+    border-radius: 5px;
+    height: 30px;
+    margin-left: 10px;
+}
+
+.upload-button-light {
+    float: left;
+    background: white;
+    color: black;
+    border-radius: 5px;
+    height: 30px;
+    margin-left: 10px;
+}
+
 @media all and (max-width: 850px) {
     .container {
         display: unset;

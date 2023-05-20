@@ -1,14 +1,15 @@
-import Button from '@material-ui/core/Button';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Peer from 'simple-peer';
 import io from 'socket.io-client';
 import Chat from './chat/Chat';
 import Controls from './controls/Controls';
-import { Switch } from "@material-ui/core";
+import { Input, Switch } from "@material-ui/core";
 import './App.css';
 import ReactPlayer from 'react-player';
+import Upload from './upload/Upload';
+import { Button } from '@material-ui/core';
 
-const socket = io.connect('https://spectacular-clafoutis-c6f414.netlify.app:5000');
+const socket = io.connect('https://lesson-bar.codedamn.app:5000');
 
 function App() {
 
@@ -31,6 +32,9 @@ function App() {
     const [time, setTime] = useState(0);
     const [isReady, setIsReady] = useState(false);
     const [canUpdate, setCanUpdate] = useState(true);
+    const [isUpload, setIsUpload] = useState(false);
+    const [videoName, setVideoName] = useState('');
+    const [videoNameTextBox, setVideoNameTextBox] = useState('');
 
     const playerRef = useRef()
 
@@ -227,83 +231,103 @@ function App() {
 
     return (
         <div>
-            <h1 style={darkMode ? { color: 'white' } : { color: 'black' }} className="title">Eddie's Super Watch Party App<Switch
-                color="secondary" className="dark-mode-toggle"
-                checked={darkMode} onChange={() => {
-                    if (darkMode) {
-                        setDarkMode(false);
-                        document.getElementsByTagName('body').item(0).style.background = 'white';
-                        localStorage.setItem('darkMode', 'false');
-                    } else {
-                        setDarkMode(true);
-                        document.getElementsByTagName('body').item(0).style.background = 'black';
-                        localStorage.setItem('darkMode', 'true');
+            <h1 style={darkMode ? { color: 'white' } : { color: 'black' }} className="title">
+                {/* <button className={darkMode ? 'upload-button-light' : 'upload-button-dark'} onClick={
+                    () => {
+                        isUpload ? setIsUpload(false) : setIsUpload(true);
                     }
+                }>
+                    {isUpload ? 'Back' : 'Upload'}
+                </button> */}
+                Eddie's Super Watch Party App
+                <Switch
+                    color="secondary" className="dark-mode-toggle"
+                    checked={darkMode} onChange={() => {
+                        if (darkMode) {
+                            setDarkMode(false);
+                            document.getElementsByTagName('body').item(0).style.background = 'white';
+                            localStorage.setItem('darkMode', 'false');
+                        } else {
+                            setDarkMode(true);
+                            document.getElementsByTagName('body').item(0).style.background = 'black';
+                            localStorage.setItem('darkMode', 'true');
+                        }
 
-                }}
-            /></h1>
-            <div className="container">
-                <div className="video-container">
-                    <ReactPlayer
-                        ref={playerRef}
-                        url="video2.m4v"
-                        height="100%"
-                        width="100%"
-                        controls={true}
-                        onPlay={play}
-                        onPause={pause}
-                        playing={playing}
-                        onReady={onReady}
-                        onSeek={(seconds) => {
-                            if (canUpdate) {
-                                update(seconds);
-                            } else {
-                                setCanUpdate(true);
-                            }
-                        }}
-                    />
-                </div>
-                <Controls setName={setName}
-                    name={name}
-                    myId={myId}
-                    idToCall={idToCall}
-                    setIdToCall={setIdToCall}
-                    callAccepted={callAccepted}
-                    callEnded={callEnded}
-                    leaveCall={leaveCall}
-                    callUser={callUser}
-                    setCalling={setCalling}
-                />
-                <div>
-                    {receivingCall && !callAccepted ? (
-                        <div className="caller" style={darkMode ? { color: 'white' } : { color: 'black' }}>
-                            <h1>{partnerName ? partnerName : "Unknown"} is calling...</h1>
-                            <Button className="answer" variant="contained" style={{ background: "green", color: 'white' }}
-                                color="inherit"
-                                onClick={answerCall}>
-                                Answer
-                            </Button>
-                        </div>
-                    ) : calling && !callAccepted && idToCall ? (
-                        <div className="caller" style={darkMode ? { color: 'white' } : { color: 'black' }}>
-                            <h1>Calling {idToCall}...</h1>
-                        </div>
-                    ) : callEnded ? (
-                        <div className="caller" style={darkMode ? { color: 'white' } : { color: 'black' }}>
-                            <h1>Call ended</h1>
-                        </div>
-                    ) : null}
-                </div>
-                <br />
-                {callAccepted && !callEnded ? (
-                    <Chat messageHistory={messageHistory}
+                    }}
+                /></h1>
+            {isUpload ? (<Upload darkMode={darkMode} />) :
+                (<div className="container">
+                    {videoName ? (
+                        <div className="video-container">
+                            <ReactPlayer
+                                ref={playerRef}
+                                url={'https://storage.cloud.google.com/eddies-super-watch-party-bucket/' + videoName}
+                                height="100%"
+                                width="100%"
+                                controls={true}
+                                onPlay={play}
+                                onPause={pause}
+                                playing={playing}
+                                onReady={onReady}
+                                onSeek={(seconds) => {
+                                    if (canUpdate) {
+                                        update(seconds);
+                                    } else {
+                                        setCanUpdate(true);
+                                    }
+                                }}
+                            />
+                        </div>) :
+                        (
+                            <center>
+                                <h>Video Name:</h>
+                                <br />
+                                <br />
+                                <Input style={{ outline: "solid black" }} onChange={e => setVideoNameTextBox(e.target.value)}/> <Button style={{ background: "black", color: "white" }} onClick={() => setVideoName(videoNameTextBox)} >Submit</Button>
+                            </center>
+                        )
+                    }
+                    <Controls setName={setName}
+                        name={name}
                         myId={myId}
-                        currentMessage={currentMessage}
-                        setCurrentMessage={setCurrentMessage}
-                        sendMessage={sendMessage}
-                        darkMode={darkMode} />
-                ) : null}
-            </div>
+                        idToCall={idToCall}
+                        setIdToCall={setIdToCall}
+                        callAccepted={callAccepted}
+                        callEnded={callEnded}
+                        leaveCall={leaveCall}
+                        callUser={callUser}
+                        setCalling={setCalling}
+                    />
+                    <div>
+                        {receivingCall && !callAccepted ? (
+                            <div className="caller" style={darkMode ? { color: 'white' } : { color: 'black' }}>
+                                <h1>{partnerName ? partnerName : "Unknown"} is calling...</h1>
+                                <Button className="answer" variant="contained" style={{ background: "green", color: 'white' }}
+                                    color="inherit"
+                                    onClick={answerCall}>
+                                    Answer
+                                </Button>
+                            </div>
+                        ) : calling && !callAccepted && idToCall ? (
+                            <div className="caller" style={darkMode ? { color: 'white' } : { color: 'black' }}>
+                                <h1>Calling {idToCall}...</h1>
+                            </div>
+                        ) : callEnded ? (
+                            <div className="caller" style={darkMode ? { color: 'white' } : { color: 'black' }}>
+                                <h1>Call ended</h1>
+                            </div>
+                        ) : null}
+                    </div>
+                    <br />
+                    {callAccepted && !callEnded ? (
+                        <Chat messageHistory={messageHistory}
+                            myId={myId}
+                            currentMessage={currentMessage}
+                            setCurrentMessage={setCurrentMessage}
+                            sendMessage={sendMessage}
+                            darkMode={darkMode} />
+                    ) : null}
+                </div>)}
         </div>
     );
 }
