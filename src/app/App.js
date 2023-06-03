@@ -285,7 +285,7 @@ function App() {
                             <center>
                                 {videoData ? videoData.items.map((item, i) => (
                                     <div>
-                                        <Button style={{background: 'black', color: 'white'}} onClick={() => setVideoName(item.selfLink.split('/').at(-1))}>{item.selfLink.split('/').at(-1)}</Button>
+                                        <Button style={{background: 'black', color: 'white'}} onClick={() => setVideoName(item.selfLink.split('/').at(-1))}>{item.selfLink.split('/').at(-1).replace('%20', ' ')}</Button>
                                         {i !== videoData.items.length ? <div><br /></div> : null}
                                     </div>
                                 )) : null}
