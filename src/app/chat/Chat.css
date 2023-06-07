@@ -20,6 +20,7 @@
     height: 400px;
     overflow: auto;
     font-size: 15px;
+    margin-left: 7.5px;
 }
 
 .chat-message {

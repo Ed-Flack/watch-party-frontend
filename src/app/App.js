@@ -9,6 +9,7 @@ import ReactPlayer from 'react-player';
 import Upload from './upload/Upload';
 import { Button } from '@material-ui/core';
 const socket = io.connect('https://watch-party-backend.herokuapp.com');
+// const socket = io.connect('http://localhost:5000');
 
 function App() {
 
@@ -64,7 +65,7 @@ function App() {
             setCallerSignal(data.signal);
         });
 
-        socket.on('receiveMessage', data => {
+        socket.off('receiveMessage').on('receiveMessage', data => {
             setMessageHistory(list => [...list, data]);
         })
 
